@@ -1,0 +1,12 @@
+class Solution {
+    public int numTrees(int n) {
+     int[] U_BST = new int[n+1];
+    U_BST[0] = 1;
+    U_BST[1] = 1;
+    for(int i=2;i<=n;i++){
+        for(int j=1;j<=i;j++)
+            U_BST[i] += U_BST[j-1] * U_BST[i-j];
+    }
+    return U_BST[n];   
+    }
+}
