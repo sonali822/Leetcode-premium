@@ -1,0 +1,91 @@
+class Solution {
+    int M;
+    int N;
+    public void solve(char[][] board) {
+        if(board.length==0)return;
+      M = board.length;
+     N = board[0].length;
+        for(int i=0;i<M;i++)
+        {
+            for(int j=0;j<N;j++)
+            {
+                //replace all O's with -
+                if(board[i][j]=='O')
+                {
+                    board[i][j]='-';
+                }
+            }
+        }
+        //check all the edges
+        //left side
+        for(int i=0;i<M;i++)
+        {
+            if(board[i][0]=='-')
+            {
+                DFS(board,i,0,'-','O');
+            }
+        }
+        //right side
+        for(int i=0;i<M;i++)
+        {
+            if(board[i][N-1]=='-')
+            {
+                DFS(board,i,N-1,'-','O');
+            }
+        }
+        //top side
+        for(int i=0;i<N;i++)
+        {
+            if(board[0][i]=='-')
+            {
+                DFS(board,0,i,'-','O');
+            }
+        }
+        //bottom 
+        for(int i=0;i<N;i++)
+        {
+            if(board[M-1][i]=='-')
+            {
+                DFS(board,M-1,i,'-','O');
+            }
+        }
+        
+        //rest all the '-'s which are left will be converted to X
+        //because the are captured
+       for(int i=0;i<M;i++)
+        {
+            for(int j=0;j<N;j++)
+            {
+                //replace all O's with -
+                if(board[i][j]=='-')
+                {
+                    board[i][j]='X';
+                }
+            }
+        }  
+        
+    }
+    public void DFS(char board[][],int x,int y,char preV,char newV)
+    {
+        //base case
+        if(x<0 || x>=board.length || y<0 || y>=board[0].length )return;
+         if(board[x][y]!=preV)
+    {
+        return;
+    }
+        //because we are here only converting a - into a O.
+        //then technically, we dont need a visited matrix
+        //why?
+        //because we call DFS only when we see a '-',
+        board[x][y] = newV;
+            
+       
+        DFS(board,x-1,y,preV,newV);
+    DFS(board,x+1,y,preV,newV);
+      DFS(board,x,y-1,preV,newV);
+     DFS(board,x,y+1,preV,newV);
+        //if element is not equal to '-' we just return
+   
+    
+    }
+}
